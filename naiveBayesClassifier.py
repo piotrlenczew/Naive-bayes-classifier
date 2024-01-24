@@ -26,7 +26,7 @@ class NaiveBayesClassifier:
 
         for c in self.classes:
             class_prob = np.log(self.class_probs[c])
-            feature_probs = np.sum(np.log(self._calculate_probability(x[i], self.means[c][i], self.stds[c][i]))
+            feature_probs = np.sum(np.log(self._calculate_probability(x[i], self.means[c][i], self.stds[c][i]) + 1e-8)
                                    for i in range(len(x)))
             probabilities[c] = class_prob + feature_probs
 

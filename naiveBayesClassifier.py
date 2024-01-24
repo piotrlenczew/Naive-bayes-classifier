@@ -18,7 +18,7 @@ class NaiveBayesClassifier:
             self.class_probs[c] = len(X_c) / len(X)
 
     def _calculate_probability(self, x, mean, std):
-        exponent = np.exp(-((x - mean) ** 2) / (2 * (std ** 2)))
+        exponent = np.exp(-((x - mean) ** 2) / (2 * (std**2)))
         return (1 / (np.sqrt(2 * np.pi) * std)) * exponent
 
     def _predict_instance(self, x):
@@ -26,8 +26,13 @@ class NaiveBayesClassifier:
 
         for c in self.classes:
             class_prob = np.log(self.class_probs[c])
-            feature_probs = np.sum(np.log(self._calculate_probability(x[i], self.means[c][i], self.stds[c][i]) + 1e-8)
-                                   for i in range(len(x)))
+            feature_probs = np.sum(
+                np.log(
+                    self._calculate_probability(x[i], self.means[c][i], self.stds[c][i])
+                    + 1e-8
+                )
+                for i in range(len(x))
+            )
             probabilities[c] = class_prob + feature_probs
 
         return max(probabilities, key=probabilities.get)
